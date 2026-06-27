@@ -30,7 +30,7 @@ rsync -avz -e "ssh -i ~/.ssh/id_ed25519" ./clawshop/ root@<server-ip>:/opt/claws
 ```
 
 ### 3. Poort aanpassen (optioneel)
-Default is poort 5000. Pas aan in `/opt/planka/docker-compose.yml`:
+Default is poort 5000. Pas aan in `/opt/clawshop/docker-compose.yml`:
 ```yaml
 ports:
   - "5000:5000"  # verander eerste getal voor andere poort
