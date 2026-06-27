@@ -1,0 +1,49 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - heading "🛒 ClawShop" [level=1] [ref=e3]
+    - navigation [ref=e4]:
+      - link "🏠 Webshop" [ref=e5] [cursor=pointer]:
+        - /url: /
+      - link "📬 Contacten" [ref=e6] [cursor=pointer]:
+        - /url: /contacts.html
+  - generic [ref=e7]:
+    - generic [ref=e8]:
+      - heading "📬 Contacten" [level=1] [ref=e9]
+      - paragraph [ref=e10]: Alle berichten via het contactformulier
+    - generic [ref=e11]:
+      - generic [ref=e12]:
+        - generic [ref=e13]: "4"
+        - generic [ref=e14]: Totaal berichten
+      - generic [ref=e15]:
+        - generic [ref=e16]: "4"
+        - generic [ref=e17]: Vandaag
+    - textbox "🔍 Zoek op naam, e-mail of onderwerp..." [ref=e18]
+    - generic [ref=e19]:
+      - generic [ref=e20]:
+        - generic [ref=e21]:
+          - generic [ref=e22]: Steven
+          - generic [ref=e23]: 6 min geleden
+        - generic [ref=e24]: 📧 steven@example.com
+        - generic [ref=e25]: Testbericht
+        - generic [ref=e26]: Dit is een testbericht vanuit Playwright!
+      - generic [ref=e27]:
+        - generic [ref=e28]:
+          - generic [ref=e29]: Gast
+          - generic [ref=e30]: 6 min geleden
+        - generic [ref=e31]: 📧 gast@example.com
+        - generic [ref=e32]: Vraag
+        - generic [ref=e33]: Ik heb een vraag zonder in te loggen.
+      - generic [ref=e34]:
+        - generic [ref=e35]:
+          - generic [ref=e36]: Steven
+          - generic [ref=e37]: 6 min geleden
+        - generic [ref=e38]: 📧 steven@example.com
+        - generic [ref=e39]: Reset test
+        - generic [ref=e40]: Test of het formulier reset na verzending.
+      - generic [ref=e41]:
+        - generic [ref=e42]:
+          - generic [ref=e43]: Steven
+          - generic [ref=e44]: 6 min geleden
+        - generic [ref=e45]: 📧 steven@example.com
+        - generic [ref=e46]: Test
+        - generic [ref=e47]: Testbericht

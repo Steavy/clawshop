@@ -1,0 +1,142 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - heading "🛒 ClawShop" [level=1] [ref=e3]
+    - navigation [ref=e4]:
+      - link "🏠 Webshop" [ref=e5] [cursor=pointer]:
+        - /url: /
+      - link "📬 Contacten" [ref=e6] [cursor=pointer]:
+        - /url: /contacts.html
+      - button "Inloggen" [ref=e7] [cursor=pointer]
+      - button "🛒 Winkelwagen (0)" [ref=e8] [cursor=pointer]
+  - generic [ref=e10]:
+    - generic [ref=e11]:
+      - heading "🎰 Daily Deal — 20% Korting!" [level=2] [ref=e12]
+      - generic [ref=e13]: 🔋 USB-C Kabel
+      - generic [ref=e14]: €12.99 €10.39
+    - generic [ref=e15]:
+      - generic [ref=e16]: "Volgende deal over:"
+      - generic [ref=e17]: 08:51:16
+    - button "🛒 Nu kopen!" [ref=e18] [cursor=pointer]
+  - generic [ref=e130]:
+    - heading "⭐ Top Beoordeelde Producten" [level=2] [ref=e131]
+    - generic [ref=e133] [cursor=pointer]:
+      - generic [ref=e134]: ⭐ 3.0
+      - generic [ref=e135]: 💻
+      - heading "Laptop Hoesje" [level=4] [ref=e136]
+      - generic [ref=e137]: ★★★☆☆
+      - generic [ref=e138]: 3 beoordelingen
+      - generic [ref=e139]: €29.99
+  - generic [ref=e19]:
+    - heading "Onze Producten" [level=2] [ref=e20]
+    - generic [ref=e21]:
+      - generic [ref=e140]:
+        - generic [ref=e141]: 💻
+        - heading "Laptop Hoesje" [level=3] [ref=e142]
+        - paragraph [ref=e143]: Beschermend hoezen voor je laptop.
+        - generic [ref=e144]: €29.99
+        - generic [ref=e145]:
+          - generic [ref=e146] [cursor=pointer]: ★
+          - generic [ref=e147] [cursor=pointer]: ★
+          - generic [ref=e148] [cursor=pointer]: ★
+          - generic [ref=e149] [cursor=pointer]: ☆
+          - generic [ref=e150] [cursor=pointer]: ☆
+          - generic [ref=e151]: 3.0 (3)
+        - button "Toevoegen" [ref=e152] [cursor=pointer]
+      - generic [ref=e153]:
+        - generic [ref=e154]: 🖱️
+        - heading "Draadloze Mouse" [level=3] [ref=e155]
+        - paragraph [ref=e156]: Ergonomische draadloze muis.
+        - generic [ref=e157]: €24.99
+        - generic [ref=e158]:
+          - generic [ref=e159] [cursor=pointer]: ☆
+          - generic [ref=e160] [cursor=pointer]: ☆
+          - generic [ref=e161] [cursor=pointer]: ☆
+          - generic [ref=e162] [cursor=pointer]: ☆
+          - generic [ref=e163] [cursor=pointer]: ☆
+          - generic [ref=e164]: Geen beoordelingen
+        - button "Toevoegen" [ref=e165] [cursor=pointer]
+      - generic [ref=e166]:
+        - generic [ref=e167]: 🔌
+        - heading "USB-C Hub" [level=3] [ref=e168]
+        - paragraph [ref=e169]: 7-in-1 USB-C hub met HDMI.
+        - generic [ref=e170]: €39.99
+        - generic [ref=e171]:
+          - generic [ref=e172] [cursor=pointer]: ☆
+          - generic [ref=e173] [cursor=pointer]: ☆
+          - generic [ref=e174] [cursor=pointer]: ☆
+          - generic [ref=e175] [cursor=pointer]: ☆
+          - generic [ref=e176] [cursor=pointer]: ☆
+          - generic [ref=e177]: Geen beoordelingen
+        - button "Toevoegen" [ref=e178] [cursor=pointer]
+      - generic [ref=e179]:
+        - generic [ref=e180]: ⌨️
+        - heading "Toetsenbord" [level=3] [ref=e181]
+        - paragraph [ref=e182]: Mechanisch toetsenbord met RGB.
+        - generic [ref=e183]: €59.99
+        - generic [ref=e184]:
+          - generic [ref=e185] [cursor=pointer]: ☆
+          - generic [ref=e186] [cursor=pointer]: ☆
+          - generic [ref=e187] [cursor=pointer]: ☆
+          - generic [ref=e188] [cursor=pointer]: ☆
+          - generic [ref=e189] [cursor=pointer]: ☆
+          - generic [ref=e190]: Geen beoordelingen
+        - button "Toevoegen" [ref=e191] [cursor=pointer]
+      - generic [ref=e192]:
+        - generic [ref=e193]: 📷
+        - heading "Webcam HD" [level=3] [ref=e194]
+        - paragraph [ref=e195]: 1080p HD webcam voor video calls.
+        - generic [ref=e196]: €44.99
+        - generic [ref=e197]:
+          - generic [ref=e198] [cursor=pointer]: ☆
+          - generic [ref=e199] [cursor=pointer]: ☆
+          - generic [ref=e200] [cursor=pointer]: ☆
+          - generic [ref=e201] [cursor=pointer]: ☆
+          - generic [ref=e202] [cursor=pointer]: ☆
+          - generic [ref=e203]: Geen beoordelingen
+        - button "Toevoegen" [ref=e204] [cursor=pointer]
+      - generic [ref=e205]:
+        - generic [ref=e206]: 🔋
+        - heading "USB-C Kabel" [level=3] [ref=e207]
+        - paragraph [ref=e208]: 2m USB-C snellaadkabel.
+        - generic [ref=e209]: €12.99
+        - generic [ref=e210]:
+          - generic [ref=e211] [cursor=pointer]: ☆
+          - generic [ref=e212] [cursor=pointer]: ☆
+          - generic [ref=e213] [cursor=pointer]: ☆
+          - generic [ref=e214] [cursor=pointer]: ☆
+          - generic [ref=e215] [cursor=pointer]: ☆
+          - generic [ref=e216]: Geen beoordelingen
+        - button "Toevoegen" [ref=e217] [cursor=pointer]
+  - generic [ref=e101]:
+    - heading "📬 Contact" [level=2] [ref=e102]
+    - paragraph [ref=e103]: Heb je een vraag of opmerking? Stuur ons een bericht!
+    - generic [ref=e104]:
+      - generic [ref=e105]:
+        - generic [ref=e106]:
+          - generic [ref=e107]: Naam *
+          - textbox "Naam *" [ref=e108]:
+            - /placeholder: Je naam
+        - generic [ref=e109]:
+          - generic [ref=e110]: E-mail *
+          - textbox "E-mail *" [ref=e111]:
+            - /placeholder: je@email.nl
+      - generic [ref=e112]:
+        - generic [ref=e113]: Onderwerp *
+        - textbox "Onderwerp *" [ref=e114]:
+          - /placeholder: Waar gaat het over?
+      - generic [ref=e115]:
+        - generic [ref=e116]: Bericht *
+        - textbox "Bericht *" [ref=e117]:
+          - /placeholder: Schrijf je bericht hier...
+      - button "Verstuur bericht" [ref=e118] [cursor=pointer]
+  - generic [ref=e119]:
+    - generic [ref=e120]:
+      - heading "🛒 Winkelwagen" [level=3] [ref=e121]
+      - generic [ref=e122]:
+        - button "📋 Bestellingen" [ref=e123] [cursor=pointer]
+        - button "✕" [ref=e124] [cursor=pointer]
+    - paragraph [ref=e126]: Je winkelwagen is leeg
+    - generic [ref=e127]:
+      - generic [ref=e128]: "Totaal: €0.00"
+      - button "Afrekenen" [ref=e129]
+  - generic [ref=e218]: Bedankt voor je beoordeling! ⭐ 3/5

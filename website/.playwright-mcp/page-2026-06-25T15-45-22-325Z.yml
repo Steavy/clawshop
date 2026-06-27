@@ -1,0 +1,133 @@
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - heading "🛒 ClawShop" [level=1] [ref=e3]
+    - navigation [ref=e4]:
+      - link "🏠 Webshop" [ref=e5] [cursor=pointer]:
+        - /url: /
+      - link "📬 Contacten" [ref=e6] [cursor=pointer]:
+        - /url: /contacts.html
+      - generic [ref=e7]: 👤 Steven
+      - button "Uitloggen" [ref=e8] [cursor=pointer]
+      - button "🛒 Winkelwagen (2)" [ref=e226] [cursor=pointer]
+  - generic [ref=e11]:
+    - generic [ref=e12]:
+      - heading "🎰 Daily Deal — 20% Korting!" [level=2] [ref=e13]
+      - generic [ref=e14]: 🔋 USB-C Kabel
+      - generic [ref=e15]: €12.99 €10.39
+    - generic [ref=e16]:
+      - generic [ref=e17]: "Volgende deal over:"
+      - generic [ref=e18]: 08:14:38
+    - button "🛒 Nu kopen!" [ref=e19] [cursor=pointer]
+  - generic [ref=e137]:
+    - heading "⭐ Top Beoordeelde Producten" [level=2] [ref=e138]
+    - generic [ref=e140] [cursor=pointer]:
+      - generic [ref=e141]: ⭐ 1.0
+      - generic [ref=e142]: 💻
+      - heading "Laptop Hoesje" [level=4] [ref=e143]
+      - generic [ref=e144]: ★☆☆☆☆
+      - generic [ref=e145]: 1 beoordelingen
+      - generic [ref=e146]: €29.99
+  - generic [ref=e20]:
+    - heading "Onze Producten" [level=2] [ref=e21]
+    - generic [ref=e22]:
+      - generic [ref=e147]:
+        - generic [ref=e148]: 💻
+        - heading "Laptop Hoesje" [level=3] [ref=e149]
+        - paragraph [ref=e150]: Beschermend hoezen voor je laptop.
+        - generic [ref=e151]: €29.99
+        - generic [ref=e152]:
+          - generic [ref=e153] [cursor=pointer]: ★
+          - generic [ref=e154] [cursor=pointer]: ☆
+          - generic [ref=e155] [cursor=pointer]: ☆
+          - generic [ref=e156] [cursor=pointer]: ☆
+          - generic [ref=e157] [cursor=pointer]: ☆
+          - generic [ref=e158]: 1.0 (1)
+        - button "Toevoegen" [active] [ref=e159] [cursor=pointer]
+      - generic [ref=e160]:
+        - generic [ref=e161]: 🖱️
+        - heading "Draadloze Mouse" [level=3] [ref=e162]
+        - paragraph [ref=e163]: Ergonomische draadloze muis.
+        - generic [ref=e164]: €24.99
+        - generic [ref=e165]:
+          - generic [ref=e166] [cursor=pointer]: ☆
+          - generic [ref=e167] [cursor=pointer]: ☆
+          - generic [ref=e168] [cursor=pointer]: ☆
+          - generic [ref=e169] [cursor=pointer]: ☆
+          - generic [ref=e170] [cursor=pointer]: ☆
+          - generic [ref=e171]: Geen beoordelingen
+        - button "Toevoegen" [ref=e172] [cursor=pointer]
+      - generic [ref=e173]:
+        - generic [ref=e174]: 🔌
+        - heading "USB-C Hub" [level=3] [ref=e175]
+        - paragraph [ref=e176]: 7-in-1 USB-C hub met HDMI.
+        - generic [ref=e177]: €39.99
+        - generic [ref=e178]:
+          - generic [ref=e179] [cursor=pointer]: ☆
+          - generic [ref=e180] [cursor=pointer]: ☆
+          - generic [ref=e181] [cursor=pointer]: ☆
+          - generic [ref=e182] [cursor=pointer]: ☆
+          - generic [ref=e183] [cursor=pointer]: ☆
+          - generic [ref=e184]: Geen beoordelingen
+        - button "Toevoegen" [ref=e185] [cursor=pointer]
+      - generic [ref=e186]:
+        - generic [ref=e187]: ⌨️
+        - heading "Toetsenbord" [level=3] [ref=e188]
+        - paragraph [ref=e189]: Mechanisch toetsenbord met RGB.
+        - generic [ref=e190]: €59.99
+        - generic [ref=e191]:
+          - generic [ref=e192] [cursor=pointer]: ☆
+          - generic [ref=e193] [cursor=pointer]: ☆
+          - generic [ref=e194] [cursor=pointer]: ☆
+          - generic [ref=e195] [cursor=pointer]: ☆
+          - generic [ref=e196] [cursor=pointer]: ☆
+          - generic [ref=e197]: Geen beoordelingen
+        - button "Toevoegen" [ref=e198] [cursor=pointer]
+      - generic [ref=e199]:
+        - generic [ref=e200]: 📷
+        - heading "Webcam HD" [level=3] [ref=e201]
+        - paragraph [ref=e202]: 1080p HD webcam voor video calls.
+        - generic [ref=e203]: €44.99
+        - generic [ref=e204]:
+          - generic [ref=e205] [cursor=pointer]: ☆
+          - generic [ref=e206] [cursor=pointer]: ☆
+          - generic [ref=e207] [cursor=pointer]: ☆
+          - generic [ref=e208] [cursor=pointer]: ☆
+          - generic [ref=e209] [cursor=pointer]: ☆
+          - generic [ref=e210]: Geen beoordelingen
+        - button "Toevoegen" [ref=e211] [cursor=pointer]
+      - generic [ref=e212]:
+        - generic [ref=e213]: 🔋
+        - heading "USB-C Kabel" [level=3] [ref=e214]
+        - paragraph [ref=e215]: 2m USB-C snellaadkabel.
+        - generic [ref=e216]: €12.99
+        - generic [ref=e217]:
+          - generic [ref=e218] [cursor=pointer]: ☆
+          - generic [ref=e219] [cursor=pointer]: ☆
+          - generic [ref=e220] [cursor=pointer]: ☆
+          - generic [ref=e221] [cursor=pointer]: ☆
+          - generic [ref=e222] [cursor=pointer]: ☆
+          - generic [ref=e223]: Geen beoordelingen
+        - button "Toevoegen" [ref=e224] [cursor=pointer]
+  - generic [ref=e102]:
+    - heading "📬 Contact" [level=2] [ref=e103]
+    - paragraph [ref=e104]: Heb je een vraag of opmerking? Stuur ons een bericht!
+    - generic [ref=e105]:
+      - generic [ref=e106]:
+        - generic [ref=e107]:
+          - generic [ref=e108]: Naam *
+          - textbox "Naam *" [ref=e109]:
+            - /placeholder: Je naam
+        - generic [ref=e110]:
+          - generic [ref=e111]: E-mail *
+          - textbox "E-mail *" [ref=e112]:
+            - /placeholder: je@email.nl
+      - generic [ref=e113]:
+        - generic [ref=e114]: Onderwerp *
+        - textbox "Onderwerp *" [ref=e115]:
+          - /placeholder: Waar gaat het over?
+      - generic [ref=e116]:
+        - generic [ref=e117]: Bericht *
+        - textbox "Bericht *" [ref=e118]:
+          - /placeholder: Schrijf je bericht hier...
+      - button "Verstuur bericht" [ref=e119] [cursor=pointer]
+  - generic [ref=e225]: Toegevoegd aan winkelwagen!

@@ -1,0 +1,15 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - heading "📬 Contacten" [level=1] [ref=e4]
+    - paragraph [ref=e5]: Alle berichten via het contactformulier
+  - generic [ref=e6]:
+    - generic [ref=e7]:
+      - generic [ref=e8]: "0"
+      - generic [ref=e9]: Totaal berichten
+    - generic [ref=e10]:
+      - generic [ref=e11]: "0"
+      - generic [ref=e12]: Vandaag
+  - textbox "🔍 Zoek op naam, e-mail of onderwerp..." [ref=e13]
+  - generic [ref=e15]:
+    - generic [ref=e16]: ⏳
+    - paragraph [ref=e17]: Berichten laden...

@@ -1,0 +1,386 @@
+/* ============================================
+   ClawShop — Gedeelde Stylesheet
+   Gebaseerd op index.html ClawShop-stijl
+   ============================================ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f5f5;
+  color: #333;
+}
+
+/* ---- Header ---- */
+header {
+  background: #2c3e50;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header h1 { font-size: 1.5rem; }
+header h1 span { color: #3498db; }
+
+/* ---- Navigation ---- */
+nav { display: flex; gap: 0.5rem; align-items: center; }
+.nav-btn { background: transparent; color: #bdc3c7; border: 1px solid transparent; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-size: 0.9rem; text-decoration: none; transition: all 0.2s; }
+.nav-btn:hover { color: white; background: rgba(255,255,255,0.1); }
+.nav-btn.active { color: white; background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.2); }
+nav button {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+nav button:hover { background: #2980b9; }
+nav button.danger { background: #e74c3c; }
+nav button.danger:hover { background: #c0392b; }
+nav button.success { background: #27ae60; }
+nav button.success:hover { background: #219a52; }
+#user-info { font-size: 0.9rem; color: #bdc3c7; }
+
+/* ---- Container ---- */
+.container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+/* ---- Login Modal ---- */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 100;
+  justify-content: center;
+  align-items: center;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+}
+.modal h2 { margin-bottom: 1rem; color: #2c3e50; }
+.modal label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.modal input {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+.modal .error {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+  display: none;
+}
+.modal .btn-row { display: flex; gap: 0.5rem; justify-content: flex-end; }
+
+/* ---- Products ---- */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+.product-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+.product-card:hover { transform: translateY(-4px); }
+.product-card .emoji { font-size: 3rem; text-align: center; margin-bottom: 0.5rem; }
+.product-card h3 { margin-bottom: 0.5rem; }
+.product-card p { color: #7f8c8d; font-size: 0.9rem; margin-bottom: 1rem; }
+.product-card .price {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #27ae60;
+  margin-bottom: 1rem;
+}
+.product-card button {
+  width: 100%;
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 0.7rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.product-card button:hover { background: #2980b9; }
+
+/* ---- Cart Sidebar ---- */
+.cart-sidebar {
+  position: fixed;
+  top: 0; right: -400px;
+  width: 400px;
+  max-width: 90%;
+  height: 100%;
+  background: white;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+  z-index: 200;
+  transition: right 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+.cart-sidebar.open { right: 0; }
+.cart-header {
+  background: #2c3e50;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cart-header button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.cart-items { flex: 1; overflow-y: auto; padding: 1rem; }
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #eee;
+}
+.cart-item .item-info { flex: 1; }
+.cart-item .item-name { font-weight: 600; }
+.cart-item .item-price { color: #7f8c8d; font-size: 0.85rem; }
+.cart-item .item-qty {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: 0.5rem;
+}
+.cart-item .item-qty span { font-weight: bold; min-width: 24px; text-align: center; }
+.cart-item .remove-btn {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.cart-footer { padding: 1rem; border-top: 2px solid #eee; }
+.cart-footer .total {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: right;
+}
+.cart-footer .total span { color: #27ae60; }
+.cart-footer button { width: 100%; padding: 0.8rem; font-size: 1rem; }
+
+/* ---- Toast ---- */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2c3e50;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  z-index: 300;
+  display: none;
+}
+.toast.show { display: block; animation: fadeIn 0.3s; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ---- Contact Form ---- */
+.contact-section {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-top: 2rem;
+}
+.contact-section h2 { margin-bottom: 0.5rem; color: #2c3e50; }
+.contact-section > p { color: #7f8c8d; margin-bottom: 1.5rem; }
+.contact-form { display: grid; gap: 1rem; max-width: 600px; }
+.contact-form .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.contact-form label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #2c3e50;
+}
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+.contact-form textarea { min-height: 120px; resize: vertical; }
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52,152,219,0.15);
+}
+.contact-form .submit-btn {
+  background: #2c3e50;
+  color: white;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  justify-self: start;
+}
+.contact-form .submit-btn:hover { background: #34495e; }
+.contact-form .submit-btn:disabled { background: #95a5a6; cursor: not-allowed; }
+.contact-success { display: none; text-align: center; padding: 2rem; }
+.contact-success.show { display: block; }
+.contact-success .icon { font-size: 3rem; margin-bottom: 0.5rem; }
+.contact-success h3 { color: #27ae60; margin-bottom: 0.5rem; }
+.contact-success p { color: #7f8c8d; }
+.contact-form .field-error {
+  color: #e74c3c;
+  font-size: 0.8rem;
+  margin-top: -0.5rem;
+  display: none;
+}
+
+/* ---- Checkout Success ---- */
+.checkout-success { text-align: center; padding: 2rem; }
+.checkout-success .checkmark { font-size: 4rem; margin-bottom: 1rem; }
+.checkout-success h2 { color: #27ae60; margin-bottom: 0.5rem; }
+.checkout-success p { color: #7f8c8d; }
+.order-summary {
+  text-align: left;
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+.order-summary h3 { margin-bottom: 0.5rem; }
+.order-summary .order-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem 0;
+  font-size: 0.9rem;
+}
+.order-summary .order-total {
+  border-top: 2px solid #ddd;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  font-weight: bold;
+  text-align: right;
+  font-size: 1.1rem;
+}
+
+/* ============================================
+   Contacten Pagina — ClawShop-stijl
+   (voorheen paarse gradient, nu consistent)
+   ============================================ */
+
+.contacten-page { background: #f5f5f5; }
+
+.contacten-page .container { max-width: 900px; margin: 0 auto; }
+
+.contacten-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+}
+.contacten-header h1 { font-size: 2rem; margin-bottom: 0.3rem; }
+.contacten-header p { font-size: 1rem; color: #7f8c8d; }
+
+/* Stats */
+.stats { display: flex; gap: 1rem; justify-content: center; margin-bottom: 2rem; }
+.stat-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  text-align: center;
+  min-width: 140px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.stat-card .number { font-size: 1.8rem; font-weight: bold; color: #2c3e50; }
+.stat-card .label { font-size: 0.8rem; color: #7f8c8d; margin-top: 0.2rem; }
+
+/* Search */
+.search-box {
+  width: 100%;
+  padding: 0.9rem 1.2rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  outline: none;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.search-box:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52,152,219,0.15);
+}
+
+/* Contact list */
+.contact-list { display: flex; flex-direction: column; gap: 1rem; }
+.contact-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.2rem 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+  animation: fadeIn 0.3s ease;
+}
+.contact-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+.contact-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+.contact-name { font-size: 1.1rem; font-weight: 700; color: #2c3e50; }
+.contact-date { font-size: 0.78rem; color: #95a5a6; white-space: nowrap; }
+.contact-email { font-size: 0.88rem; color: #3498db; margin-bottom: 0.4rem; }
+.contact-subject { font-size: 0.95rem; font-weight: 600; color: #34495e; margin-bottom: 0.3rem; }
+.contact-message {
+  font-size: 0.88rem;
+  color: #7f8c8d;
+  line-height: 1.5;
+  background: #f8f9fa;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  border-left: 3px solid #3498db;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  color: #7f8c8d;
+  padding: 3rem;
+}
+.empty-state .icon { font-size: 3rem; margin-bottom: 0.5rem; }

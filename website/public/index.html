@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClawShop — Lokale Webshop</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; color: #333; }
+
+    /* Header */
+    header { background: #2c3e50; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    header h1 { font-size: 1.5rem; }
+    header h1 span { color: #3498db; }
+    nav { display: flex; gap: 0.5rem; align-items: center; }
+    /* Nav buttons (navigatie) */
+    .nav-btn { background: transparent; color: #bdc3c7; border: 1px solid transparent; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-size: 0.9rem; text-decoration: none; transition: all 0.2s; }
+    .nav-btn:hover { color: white; background: rgba(255,255,255,0.1); }
+    .nav-btn.active { color: white; background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.2); }
+    /* Action buttons */
+    nav button { background: #3498db; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-size: 0.9rem; }
+    nav button:hover { background: #2980b9; }
+    nav button.danger { background: #e74c3c; }
+    nav button.danger:hover { background: #c0392b; }
+    nav button.success { background: #27ae60; }
+    nav button.success:hover { background: #219a52; }
+    #user-info { font-size: 0.9rem; color: #bdc3c7; }
+
+    /* Login Modal */
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100; justify-content: center; align-items: center; }
+    .modal-overlay.active { display: flex; }
+    .modal { background: white; padding: 2rem; border-radius: 8px; width: 400px; max-width: 90%; }
+    .modal h2 { margin-bottom: 1rem; color: #2c3e50; }
+    .modal label { display: block; margin-bottom: 0.3rem; font-weight: 600; font-size: 0.9rem; }
+    .modal input { width: 100%; padding: 0.6rem; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem; }
+    .modal .error { color: #e74c3c; font-size: 0.85rem; margin-bottom: 0.5rem; display: none; }
+    .modal .btn-row { display: flex; gap: 0.5rem; justify-content: flex-end; }
+
+    /* Products */
+    .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+    .product-card { background: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: transform 0.2s; }
+    .product-card:hover { transform: translateY(-4px); }
+    .product-card .emoji { font-size: 3rem; text-align: center; margin-bottom: 0.5rem; }
+    .product-card h3 { margin-bottom: 0.5rem; }
+    .product-card p { color: #7f8c8d; font-size: 0.9rem; margin-bottom: 1rem; }
+    .product-card .price { font-size: 1.3rem; font-weight: bold; color: #27ae60; margin-bottom: 1rem; }
+    .product-card button { width: 100%; background: #3498db; color: white; border: none; padding: 0.7rem; border-radius: 4px; cursor: pointer; font-size: 1rem; }
+    .product-card button:hover { background: #2980b9; }
+
+    /* Cart Sidebar */
+    .cart-sidebar { position: fixed; top: 0; right: -400px; width: 400px; max-width: 90%; height: 100%; background: white; box-shadow: -2px 0 10px rgba(0,0,0,0.2); z-index: 200; transition: right 0.3s; display: flex; flex-direction: column; }
+    .cart-sidebar.open { right: 0; }
+    .cart-header { background: #2c3e50; color: white; padding: 1rem; display: flex; justify-content: space-between; align-items: center; }
+    .cart-header button { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+    .cart-items { flex: 1; overflow-y: auto; padding: 1rem; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 0; border-bottom: 1px solid #eee; }
+    .cart-item .item-info { flex: 1; }
+    .cart-item .item-name { font-weight: 600; }
+    .cart-item .item-price { color: #7f8c8d; font-size: 0.85rem; }
+    .cart-item .item-qty { display: flex; align-items: center; gap: 0.5rem; margin-right: 0.5rem; }
+    .cart-item .item-qty span { font-weight: bold; min-width: 24px; text-align: center; }
+    .cart-item .remove-btn { background: #e74c3c; color: white; border: none; padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer; }
+    .cart-footer { padding: 1rem; border-top: 2px solid #eee; }
+    .cart-footer .total { font-size: 1.3rem; font-weight: bold; margin-bottom: 1rem; text-align: right; }
+    .cart-footer .total span { color: #27ae60; }
+    .cart-footer button { width: 100%; padding: 0.8rem; font-size: 1rem; }
+
+    /* Toast */
+    .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: #2c3e50; color: white; padding: 0.8rem 1.5rem; border-radius: 4px; z-index: 300; display: none; }
+    .toast.show { display: block; animation: fadeIn 0.3s; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateX(-50%) translateY(10px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+
+    /* Contact */
+    .contact-section { background: white; border-radius: 8px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-top: 2rem; }
+    .contact-section h2 { margin-bottom: 0.5rem; color: #2c3e50; }
+    .contact-section > p { color: #7f8c8d; margin-bottom: 1.5rem; }
+    .contact-form { display: grid; gap: 1rem; max-width: 600px; }
+    .contact-form .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .contact-form label { display: block; margin-bottom: 0.3rem; font-weight: 600; font-size: 0.9rem; color: #2c3e50; }
+    .contact-form input,
+    .contact-form textarea { width: 100%; padding: 0.7rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem; font-family: inherit; }
+    .contact-form textarea { min-height: 120px; resize: vertical; }
+    .contact-form input:focus,
+    .contact-form textarea:focus { outline: none; border-color: #3498db; box-shadow: 0 0 0 3px rgba(52,152,219,0.15); }
+    .contact-form .submit-btn { background: #2c3e50; color: white; border: none; padding: 0.8rem 2rem; border-radius: 4px; cursor: pointer; font-size: 1rem; justify-self: start; }
+    .contact-form .submit-btn:hover { background: #34495e; }
+    .contact-form .submit-btn:disabled { background: #95a5a6; cursor: not-allowed; }
+    .contact-success { display: none; text-align: center; padding: 2rem; }
+    .contact-success.show { display: block; }
+    .contact-success .icon { font-size: 3rem; margin-bottom: 0.5rem; }
+    .contact-success h3 { color: #27ae60; margin-bottom: 0.5rem; }
+    .contact-success p { color: #7f8c8d; }
+    .contact-form .field-error { color: #e74c3c; font-size: 0.8rem; margin-top: -0.5rem; display: none; }
+
+    /* Checkout Success */
+    .checkout-success { text-align: center; padding: 2rem; }
+    .checkout-success .checkmark { font-size: 4rem; margin-bottom: 1rem; }
+    .checkout-success h2 { color: #27ae60; margin-bottom: 0.5rem; }
+    .checkout-success p { color: #7f8c8d; }
+    .order-summary { text-align: left; background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-top: 1rem; }
+    .order-summary h3 { margin-bottom: 0.5rem; }
+    .order-summary .order-item { display: flex; justify-content: space-between; padding: 0.3rem 0; font-size: 0.9rem; }
+    .order-summary .order-total { border-top: 2px solid #ddd; margin-top: 0.5rem; padding-top: 0.5rem; font-weight: bold; text-align: right; font-size: 1.1rem; }
+
+  /* Daily Deal */
+  .daily-deal { background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; border-radius: 12px; padding: 1.5rem 2rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; box-shadow: 0 4px 15px rgba(231,76,60,0.3); }
+  .daily-deal .deal-info h2 { font-size: 1.3rem; margin-bottom: 0.3rem; }
+  .daily-deal .deal-info .deal-product { font-size: 1.1rem; font-weight: 600; }
+  .daily-deal .deal-info .deal-prices { margin-top: 0.3rem; }
+  .daily-deal .deal-info .original-price { text-decoration: line-through; opacity: 0.7; font-size: 0.95rem; }
+  .daily-deal .deal-info .deal-price { font-size: 1.4rem; font-weight: bold; margin-left: 0.5rem; }
+  .daily-deal .countdown { text-align: center; }
+  .daily-deal .countdown .countdown-label { font-size: 0.75rem; opacity: 0.8; margin-bottom: 0.3rem; }
+  .daily-deal .countdown .countdown-timer { font-size: 1.5rem; font-weight: bold; font-variant-numeric: tabular-nums; }
+  .daily-deal .countdown .countdown-timer span { background: rgba(255,255,255,0.2); padding: 0.2rem 0.5rem; border-radius: 4px; margin: 0 0.1rem; }
+  .daily-deal .deal-add-btn { background: white; color: #e74c3c; border: none; padding: 0.7rem 1.5rem; border-radius: 6px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: transform 0.2s; }
+  .daily-deal .deal-add-btn:hover { transform: scale(1.05); }
+
+  /* Star Rating */
+  .star-rating { display: flex; gap: 0.15rem; margin: 0.5rem 0; align-items: center; }
+  .star-rating .star { font-size: 1.3rem; cursor: pointer; opacity: 0.3; transition: opacity 0.2s, transform 0.1s; user-select: none; }
+  .star-rating .star:hover { transform: scale(1.2); }
+  .star-rating .star.filled { opacity: 1; }
+  .star-rating .star.hover { opacity: 0.7; }
+  .star-rating .rating-info { font-size: 0.8rem; color: #7f8c8d; margin-left: 0.5rem; }
+
+  /* Top Rated Section */
+  .top-rated-section { margin-bottom: 2rem; }
+  .top-rated-section h2 { margin-bottom: 1rem; }
+  .top-rated-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+  .top-rated-card { background: white; border-radius: 8px; padding: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; cursor: pointer; transition: transform 0.2s; position: relative; }
+  .top-rated-card:hover { transform: translateY(-3px); }
+  .top-rated-card .top-badge { position: absolute; top: -8px; right: -8px; background: #f39c12; color: white; font-size: 0.7rem; font-weight: bold; padding: 0.2rem 0.5rem; border-radius: 10px; }
+  .top-rated-card .emoji { font-size: 2rem; margin-bottom: 0.3rem; }
+  .top-rated-card h4 { font-size: 0.9rem; margin-bottom: 0.3rem; }
+  .top-rated-card .stars-display { color: #f39c12; font-size: 0.9rem; }
+  .top-rated-card .rating-count { font-size: 0.75rem; color: #7f8c8d; }
+
+  /* Order History */
+  .order-history-section { background: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-top: 1.5rem; display: none; }
+  .order-history-section.show { display: block; }
+  .order-history-section h2 { margin-bottom: 1rem; color: #2c3e50; font-size: 1.2rem; }
+  .order-history-item { border: 1px solid #eee; border-radius: 6px; padding: 0.8rem; margin-bottom: 0.5rem; }
+  .order-history-item .order-header { display: flex; justify-content: space-between; margin-bottom: 0.3rem; font-size: 0.85rem; }
+  .order-history-item .order-id { font-weight: 600; color: #2c3e50; }
+  .order-history-item .order-date { color: #7f8c8d; }
+  .order-history-item .order-items { font-size: 0.8rem; color: #7f8c8d; }
+  .order-history-item .order-total { font-weight: bold; color: #27ae60; text-align: right; margin-top: 0.3rem; }
+  .no-orders { text-align: center; color: #7f8c8d; padding: 1rem; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>🛒 <span>Claw</span>Shop</h1>
+    <nav>
+      <a href="/" class="nav-btn active">🏠 Webshop</a>
+      <a href="/contacts.html" class="nav-btn">📬 Contacten</a>
+      <span id="user-info"></span>
+      <button id="login-btn" onclick="openLogin()">Inloggen</button>
+      <button id="logout-btn" class="danger" onclick="logout()" style="display:none">Uitloggen</button>
+      <button class="success" onclick="toggleCart()">🛒 Winkelwagen (<span id="cart-count">0</span>)</button>
+    </nav>
+  </header>
+
+  <!-- Login Modal -->
+  <div class="modal-overlay" id="login-modal">
+    <div class="modal">
+      <h2>🔐 Inloggen</h2>
+      <label for="email">E-mail</label>
+      <input type="email" id="email" placeholder="steven@example.com" data-testid="login-email">
+      <label for="password">Wachtwoord</label>
+      <input type="password" id="password" placeholder="••••••••" data-testid="login-password">
+      <div class="error" id="login-error">Ongeldige inloggegevens</div>
+      <div class="btn-row">
+        <button onclick="closeLogin()" style="background:#95a5a6">Annuleren</button>
+        <button onclick="login()" data-testid="login-submit">Inloggen</button>
+      </div>
+      <p style="margin-top:1rem;font-size:0.8rem;color:#95a5a6;">
+        Test accounts:<br>
+        steven@example.com / welkom123<br>
+        test@example.com / test123
+      </p>
+    </div>
+  </div>
+
+  <!-- Daily Deal -->
+  <div class="container">
+    <div class="daily-deal" id="daily-deal" style="display:none;">
+      <div class="deal-info">
+        <h2>🎰 Daily Deal — 20% Korting!</h2>
+        <div class="deal-product" id="deal-product-name"></div>
+        <div class="deal-prices">
+          <span class="original-price" id="deal-original-price"></span>
+          <span class="deal-price" id="deal-price"></span>
+        </div>
+      </div>
+      <div class="countdown">
+        <div class="countdown-label">Volgende deal over:</div>
+        <div class="countdown-timer" id="countdown-timer"></div>
+      </div>
+      <button class="deal-add-btn" id="deal-add-btn">🛒 Nu kopen!</button>
+    </div>
+  </div>
+
+  <!-- Top Rated -->
+  <div class="container top-rated-section" id="top-rated-section" style="display:none;">
+    <h2>⭐ Top Beoordeelde Producten</h2>
+    <div class="top-rated-grid" id="top-rated-grid"></div>
+  </div>
+
+  <!-- Products -->
+  <div class="container">
+    <h2 style="margin-bottom:1.5rem;">Onze Producten</h2>
+    <div class="products-grid" id="products-grid"></div>
+  </div>
+
+  <!-- Contact -->
+  <div class="container">
+    <div class="contact-section">
+      <h2>📬 Contact</h2>
+      <p>Heb je een vraag of opmerking? Stuur ons een bericht!</p>
+      <form class="contact-form" id="contact-form" onsubmit="submitContact(event)" novalidate>
+        <div class="form-row">
+          <div>
+            <label for="contact-name">Naam *</label>
+            <input type="text" id="contact-name" placeholder="Je naam" required data-testid="contact-name">
+            <div class="field-error" id="contact-name-error">Vul je naam in</div>
+          </div>
+          <div>
+            <label for="contact-email">E-mail *</label>
+            <input type="email" id="contact-email" placeholder="je@email.nl" required data-testid="contact-email" onblur="validateContactEmail()">
+            <div class="field-error" id="contact-email-error">Vul een geldig e-mailadres in</div>
+          </div>
+        </div>
+        <div>
+          <label for="contact-subject">Onderwerp *</label>
+          <input type="text" id="contact-subject" placeholder="Waar gaat het over?" required data-testid="contact-subject">
+          <div class="field-error" id="contact-subject-error">Vul een onderwerp in</div>
+        </div>
+        <div>
+          <label for="contact-message">Bericht *</label>
+          <textarea id="contact-message" placeholder="Schrijf je bericht hier..." required data-testid="contact-message"></textarea>
+          <div class="field-error" id="contact-message-error">Vul je bericht in</div>
+        </div>
+        <button type="submit" class="submit-btn" id="contact-submit" data-testid="contact-submit">Verstuur bericht</button>
+      </form>
+      <div class="contact-success" id="contact-success">
+        <div class="icon">✉️</div>
+        <h3>Bericht verzonden!</h3>
+        <p>Bedankt voor je bericht. We nemen zo snel mogelijk contact met je op.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Sidebar -->
+  <div class="cart-sidebar" id="cart-sidebar">
+    <div class="cart-header">
+      <h3>🛒 Winkelwagen</h3>
+      <div style="display:flex;gap:0.5rem;align-items:center;">
+        <button onclick="toggleOrderHistory()" style="background:rgba(255,255,255,0.15);font-size:0.8rem;padding:0.3rem 0.6rem;" id="order-history-btn">📋 Bestellingen</button>
+        <button onclick="toggleCart()">✕</button>
+      </div>
+    </div>
+    <div class="cart-items" id="cart-items"></div>
+    <div class="order-history-section" id="order-history-section">
+      <h2>📋 Mijn Bestellingen</h2>
+      <div id="order-history-list"></div>
+    </div>
+    <div class="cart-footer" id="cart-footer">
+      <div class="total">Totaal: €<span id="cart-total">0.00</span></div>
+      <button class="success" onclick="checkout()" id="checkout-btn" data-testid="checkout-btn">Afrekenen</button>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    let cartCount = 0;
+
+    // Check auth on load
+    async function checkAuth() {
+      const res = await fetch('/api/me');
+      const data = await res.json();
+      if (data.loggedIn) {
+        document.getElementById('user-info').textContent = `👤 ${data.user.name}`;
+        document.getElementById('login-btn').style.display = 'none';
+        document.getElementById('logout-btn').style.display = 'inline-block';
+      }
+    }
+
+    // Load products
+    async function loadProducts() {
+      const res = await fetch('/api/products');
+      const products = await res.json();
+      const ratingsRes = await fetch('/api/ratings');
+      const ratingsData = await ratingsRes.json();
+      const ratingsMap = {};
+      ratingsData.forEach(r => { ratingsMap[r.productId] = r; });
+      const grid = document.getElementById('products-grid');
+      grid.innerHTML = products.map(p => {
+        const r = ratingsMap[p.id];
+        const avg = r ? r.average : 0;
+        const count = r ? r.count : 0;
+        const stars = renderStars(p.id, avg, count);
+        return `
+        <div class="product-card" data-product-id="${p.id}">
+          <div class="emoji">${p.image}</div>
+          <h3>${p.name}</h3>
+          <p>${p.description}</p>
+          <div class="price">€${p.price.toFixed(2)}</div>
+          ${stars}
+          <button onclick="addToCart(${p.id})" data-testid="add-to-cart-${p.id}">Toevoegen</button>
+        </div>
+      `}).join('');
+    }
+
+    function renderStars(productId, avg, count) {
+      let html = '<div class="star-rating" data-product-id="' + productId + '">';
+      for (let i = 1; i <= 5; i++) {
+        const filled = i <= Math.round(avg) ? 'filled' : '';
+        html += '<span class="star ' + filled + '" data-value="' + i + '" onclick="rateProduct(' + productId + ', ' + i + ')" onmouseenter="hoverStar(' + productId + ', ' + i + ')" onmouseleave="unhoverStar(' + productId + ')">' + (filled ? '★' : '☆') + '</span>';
+      }
+      html += '<span class="rating-info">' + (count > 0 ? avg.toFixed(1) + ' (' + count + ')' : 'Geen beoordelingen') + '</span>';
+      html += '</div>';
+      return html;
+    }
+
+    function renderStaticStars(avg) {
+      let html = '';
+      for (let i = 1; i <= 5; i++) {
+        html += i <= Math.round(avg) ? '★' : '☆';
+      }
+      return html;
+    }
+
+    async function rateProduct(productId, rating) {
+      const res = await fetch('/api/rating', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId, rating })
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast('Bedankt voor je beoordeling! ⭐ ' + data.average + '/5');
+        loadProducts();
+        loadTopRated();
+      }
+    }
+
+    function hoverStar(productId, value) {
+      const container = document.querySelector('.star-rating[data-product-id="' + productId + '"]');
+      if (!container) return;
+      const stars = container.querySelectorAll('.star');
+      stars.forEach((s, i) => {
+        s.classList.remove('hover', 'filled');
+        if (i < value) s.classList.add('hover');
+      });
+    }
+
+    function unhoverStar(productId) {
+      const container = document.querySelector('.star-rating[data-product-id="' + productId + '"]');
+      if (!container) return;
+      const stars = container.querySelectorAll('.star');
+      stars.forEach(s => {
+        s.classList.remove('hover');
+        if (s.dataset.value <= parseInt(s.dataset.value)) {
+          // Keep filled state
+        }
+      });
+    }
+
+    // Login
+    function openLogin() { document.getElementById('login-modal').classList.add('active'); }
+    function closeLogin() {
+      document.getElementById('login-modal').classList.remove('active');
+      document.getElementById('login-error').style.display = 'none';
+    }
+    async function login() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (data.success) {
+        closeLogin();
+        checkAuth();
+        showToast(`Welkom, ${data.user.name}!`);
+      } else {
+        document.getElementById('login-error').style.display = 'block';
+      }
+    }
+
+    // Logout
+    async function logout() {
+      await fetch('/api/logout', { method: 'POST' });
+      document.getElementById('user-info').textContent = '';
+      document.getElementById('login-btn').style.display = 'inline-block';
+      document.getElementById('logout-btn').style.display = 'none';
+      cartCount = 0;
+      document.getElementById('cart-count').textContent = '0';
+      showToast('Uitgelogd');
+    }
+
+    // Cart
+    function toggleCart() {
+      const sidebar = document.getElementById('cart-sidebar');
+      sidebar.classList.toggle('open');
+      if (sidebar.classList.contains('open')) {
+        loadCart();
+        document.getElementById('order-history-section').classList.remove('show');
+      }
+    }
+
+    async function addToCart(productId) {
+      const res = await fetch('/api/cart/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId, quantity: 1 })
+      });
+      const data = await res.json();
+      cartCount = data.cart.reduce((s, i) => s + i.quantity, 0);
+      document.getElementById('cart-count').textContent = cartCount;
+      // Open cart sidebar automatically to show sync
+      const sidebar = document.getElementById('cart-sidebar');
+      if (!sidebar.classList.contains('open')) {
+        toggleCart();
+      } else {
+        loadCart();
+      }
+      showToast('Toegevoegd aan winkelwagen!');
+    }
+
+    async function addDealToCart(deal) {
+      const res = await fetch('/api/cart/add-deal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      const data = await res.json();
+      cartCount = data.cart.reduce((s, i) => s + i.quantity, 0);
+      document.getElementById('cart-count').textContent = cartCount;
+      // Sync cart sidebar content
+      const sidebar = document.getElementById('cart-sidebar');
+      if (!sidebar.classList.contains('open')) {
+        toggleCart();
+      } else {
+        loadCart();
+      }
+      showToast('Daily Deal toegevoegd voor €' + deal.dealPrice.toFixed(2) + ' 🎰');
+    }
+
+    async function loadCart() {
+      const res = await fetch('/api/cart');
+      const data = await res.json();
+      const container = document.getElementById('cart-items');
+      if (data.cart.length === 0) {
+        container.innerHTML = '<p style="text-align:center;color:#95a5a6;padding:2rem;">Je winkelwagen is leeg</p>';
+      } else {
+        container.innerHTML = data.cart.map(item => `
+          <div class="cart-item">
+            <div class="item-info">
+              <div class="item-name">${item.name}</div>
+              <div class="item-price">€${item.price.toFixed(2)} × ${item.quantity}</div>
+            </div>
+            <div class="item-qty">
+              <span>${item.quantity}</span>
+            </div>
+            <button class="remove-btn" onclick="removeFromCart(${item.productId})" data-testid="remove-${item.productId}">✕</button>
+          </div>
+        `).join('');
+      }
+      document.getElementById('cart-total').textContent = data.total.toFixed(2);
+    }
+
+    async function removeFromCart(productId) {
+      const res = await fetch('/api/cart/remove', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId })
+      });
+      const data = await res.json();
+      cartCount = data.cart.reduce((s, i) => s + i.quantity, 0);
+      document.getElementById('cart-count').textContent = cartCount;
+      loadCart();
+    }
+
+    // Checkout
+    async function checkout() {
+      const res = await fetch('/api/checkout', { method: 'POST' });
+      const data = await res.json();
+      if (data.success) {
+        cartCount = 0;
+        document.getElementById('cart-count').textContent = 0;
+        const o = data.order;
+        document.getElementById('cart-items').innerHTML = `
+          <div class="checkout-success">
+            <div class="checkmark">✅</div>
+            <h2>Bestelling geplaatst!</h2>
+            <p>Bedankt, ${o.customer}!</p>
+            <div class="order-summary">
+              <h3>Bestelling #${o.id}</h3>
+              ${o.items.map(i => `<div class="order-item"><span>${i.name} × ${i.quantity}</span><span>€${(i.price * i.quantity).toFixed(2)}</span></div>`).join('')}
+              <div class="order-total">Totaal: €${o.total.toFixed(2)}</div>
+            </div>
+          </div>
+        `;
+        document.getElementById('cart-total').textContent = '0.00';
+        document.getElementById('checkout-btn').style.display = 'none';
+        document.getElementById('cart-footer').querySelector('.total').style.display = 'none';
+        setTimeout(() => {
+          document.getElementById('checkout-btn').style.display = 'block';
+          document.getElementById('cart-footer').querySelector('.total').style.display = '';
+          loadCart();
+        }, 5000);
+        showToast('✅ Bestelling #' + o.id + ' geplaatst! Totaal: €' + o.total.toFixed(2));
+        // Refresh cart count display
+        setTimeout(() => { loadCart(); }, 500);
+        loadOrderHistory();
+      } else {
+        if (data.error.includes('ingelogd')) {
+          toggleCart();
+          openLogin();
+        }
+        showToast(data.error);
+      }
+    }
+
+    // Real-time field validation
+    function validateContactField(fieldId) {
+      const el = document.getElementById(fieldId);
+      const errorEl = document.getElementById(fieldId + '-error');
+      if (!el.value.trim()) {
+        errorEl.style.display = 'block';
+        el.style.borderColor = '#e74c3c';
+      } else {
+        errorEl.style.display = 'none';
+        el.style.borderColor = '#ddd';
+      }
+    }
+
+    function validateContactEmail() {
+      const el = document.getElementById('contact-email');
+      const errorEl = document.getElementById('contact-email-error');
+      const email = el.value.trim();
+      if (!email) {
+        errorEl.textContent = 'Vul een geldig e-mailadres in';
+        errorEl.style.display = 'block';
+        el.style.borderColor = '#e74c3c';
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        errorEl.textContent = 'Ongeldig e-mailadres';
+        errorEl.style.display = 'block';
+        el.style.borderColor = '#e74c3c';
+      } else {
+        errorEl.style.display = 'none';
+        el.style.borderColor = '#ddd';
+      }
+    }
+
+    // Contact form
+    async function submitContact(e) {
+      e.preventDefault();
+      const name = document.getElementById('contact-name').value.trim();
+      const email = document.getElementById('contact-email').value.trim();
+      const subject = document.getElementById('contact-subject').value.trim();
+      const message = document.getElementById('contact-message').value.trim();
+
+      // Hide all errors and reset borders
+      document.querySelectorAll('.field-error').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.contact-form input, .contact-form textarea').forEach(el => el.style.borderColor = '#ddd');
+
+      // Validate
+      let hasError = false;
+      if (!name) { document.getElementById('contact-name-error').style.display = 'block'; hasError = true; }
+      if (!email) {
+        document.getElementById('contact-email-error').textContent = 'Vul een geldig e-mailadres in';
+        document.getElementById('contact-email-error').style.display = 'block';
+        hasError = true;
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('contact-email-error').textContent = 'Ongeldig e-mailadres';
+        document.getElementById('contact-email-error').style.display = 'block';
+        hasError = true;
+      }
+      if (!subject) { document.getElementById('contact-subject-error').style.display = 'block'; hasError = true; }
+      if (!message) { document.getElementById('contact-message-error').style.display = 'block'; hasError = true; }
+      if (hasError) return;
+
+      const btn = document.getElementById('contact-submit');
+      btn.disabled = true;
+      btn.textContent = 'Versturen...';
+
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, subject, message })
+        });
+        const data = await res.json();
+        if (data.success) {
+          document.getElementById('contact-form').style.display = 'none';
+          document.querySelectorAll('.contact-form input, .contact-form textarea').forEach(el => el.style.borderColor = '#ddd');
+          document.getElementById('contact-success').classList.add('show');
+          showToast('Bericht verzonden! ✉️');
+          // Reset after 4 seconds
+          setTimeout(() => {
+            document.getElementById('contact-form').style.display = 'grid';
+            document.getElementById('contact-success').classList.remove('show');
+            document.getElementById('contact-form').reset();
+          }, 4000);
+        } else {
+          showToast(data.error || 'Er ging iets mis');
+        }
+      } catch (err) {
+        showToast('Fout bij verzenden');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Verstuur bericht';
+      }
+    }
+
+    // Toast
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    // ============ DAILY DEAL ============
+    async function loadDailyDeal() {
+      try {
+        const res = await fetch('/api/daily-deal');
+        const deal = await res.json();
+        document.getElementById('deal-product-name').textContent = deal.product.image + ' ' + deal.product.name;
+        document.getElementById('deal-original-price').textContent = '€' + deal.originalPrice.toFixed(2);
+        document.getElementById('deal-price').textContent = '€' + deal.dealPrice.toFixed(2);
+        document.getElementById('deal-add-btn').onclick = function() { addDealToCart(deal); };
+        document.getElementById('daily-deal').style.display = 'flex';
+        updateCountdown(deal.countdown);
+      } catch(e) {
+        console.error('Daily deal laden mislukt:', e);
+      }
+    }
+
+    function updateCountdown(countdown) {
+      const el = document.getElementById('countdown-timer');
+      el.innerHTML = '<span>' + String(countdown.hours).padStart(2,'0') + '</span>:<span>' + String(countdown.minutes).padStart(2,'0') + '</span>:<span>' + String(countdown.seconds).padStart(2,'0') + '</span>';
+    }
+
+    // Live countdown elke seconde
+    setInterval(async () => {
+      try {
+        const res = await fetch('/api/daily-deal');
+        const deal = await res.json();
+        updateCountdown(deal.countdown);
+      } catch(e) {}
+    }, 1000);
+
+    // ============ TOP RATED ============
+    async function loadTopRated() {
+      try {
+        const res = await fetch('/api/ratings');
+        const ratings = await res.json();
+        const rated = ratings.filter(r => r.count > 0).sort((a, b) => b.average - a.average);
+        if (rated.length === 0) {
+          document.getElementById('top-rated-section').style.display = 'none';
+          return;
+        }
+        document.getElementById('top-rated-section').style.display = 'block';
+        const productsRes = await fetch('/api/products');
+        const products = await productsRes.json();
+        const grid = document.getElementById('top-rated-grid');
+        grid.innerHTML = rated.slice(0, 3).map(r => {
+          const p = products.find(pr => pr.id === r.productId);
+          if (!p) return '';
+          return '<div class="top-rated-card" onclick="scrollToProducts()" data-testid="top-rated-' + p.id + '">' +
+            '<div class="top-badge">⭐ ' + r.average.toFixed(1) + '</div>' +
+            '<div class="emoji">' + p.image + '</div>' +
+            '<h4>' + p.name + '</h4>' +
+            '<div class="stars-display">' + renderStaticStars(r.average) + '</div>' +
+            '<div class="rating-count">' + r.count + ' beoordelingen</div>' +
+            '<div class="price" style="margin-top:0.3rem;font-size:1rem;">€' + p.price.toFixed(2) + '</div>' +
+          '</div>';
+        }).join('');
+      } catch(e) {
+        console.error('Top rated laden mislukt:', e);
+      }
+    }
+
+    function scrollToProducts() {
+      document.getElementById('products-grid').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ============ ORDER HISTORY ============
+    function toggleOrderHistory() {
+      const section = document.getElementById('order-history-section');
+      section.classList.toggle('show');
+      if (section.classList.contains('show')) {
+        loadOrderHistory();
+      }
+    }
+
+    async function loadOrderHistory() {
+      try {
+        const res = await fetch('/api/order-history', { credentials: 'include' });
+        if (res.status === 401) {
+          document.getElementById('order-history-list').innerHTML = '<div class="no-orders">🔒 Log in om je bestellingen te bekijken</div>';
+          return;
+        }
+        const orders = await res.json();
+        const list = document.getElementById('order-history-list');
+        if (orders.length === 0) {
+          list.innerHTML = '<div class="no-orders">📭 Je hebt nog geen bestellingen</div>';
+          return;
+        }
+        list.innerHTML = orders.map(o => {
+          const date = new Date(o.date);
+          const dateStr = date.toLocaleDateString('nl-NL', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+          return '<div class="order-history-item">' +
+            '<div class="order-header"><span class="order-id">Bestelling #' + o.id + '</span><span class="order-date">' + dateStr + '</span></div>' +
+            '<div class="order-items">' + o.items.map(i => i.name + ' × ' + i.quantity).join(', ') + '</div>' +
+            '<div class="order-total">€' + o.total.toFixed(2) + '</div>' +
+          '</div>';
+        }).join('');
+      } catch(e) {
+        document.getElementById('order-history-list').innerHTML = '<div class="no-orders">⚠️ Fout bij laden</div>';
+      }
+    }
+
+    // ============ INIT ============
+    checkAuth();
+    loadProducts();
+    loadCart();
+    loadDailyDeal();
+    loadTopRated();
+  </script>
+</body>
+</html>

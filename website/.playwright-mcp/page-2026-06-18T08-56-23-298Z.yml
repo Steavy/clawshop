@@ -1,0 +1,79 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - heading "🛒 ClawShop" [level=1] [ref=e3]
+    - navigation [ref=e4]:
+      - link "🏠 Webshop" [ref=e5] [cursor=pointer]:
+        - /url: /
+      - link "📬 Contacten" [ref=e6] [cursor=pointer]:
+        - /url: /contacts.html
+      - button "Inloggen" [ref=e7] [cursor=pointer]
+      - button "🛒 Winkelwagen (0)" [ref=e8] [cursor=pointer]
+  - generic [ref=e9]:
+    - heading "Onze Producten" [level=2] [ref=e10]
+    - generic [ref=e11]:
+      - generic [ref=e12]:
+        - generic [ref=e13]: 💻
+        - heading "Laptop Hoesje" [level=3] [ref=e14]
+        - paragraph [ref=e15]: Beschermend hoezen voor je laptop.
+        - generic [ref=e16]: €29.99
+        - button "Toevoegen" [ref=e17] [cursor=pointer]
+      - generic [ref=e18]:
+        - generic [ref=e19]: 🖱️
+        - heading "Draadloze Mouse" [level=3] [ref=e20]
+        - paragraph [ref=e21]: Ergonomische draadloze muis.
+        - generic [ref=e22]: €24.99
+        - button "Toevoegen" [ref=e23] [cursor=pointer]
+      - generic [ref=e24]:
+        - generic [ref=e25]: 🔌
+        - heading "USB-C Hub" [level=3] [ref=e26]
+        - paragraph [ref=e27]: 7-in-1 USB-C hub met HDMI.
+        - generic [ref=e28]: €39.99
+        - button "Toevoegen" [ref=e29] [cursor=pointer]
+      - generic [ref=e30]:
+        - generic [ref=e31]: ⌨️
+        - heading "Toetsenbord" [level=3] [ref=e32]
+        - paragraph [ref=e33]: Mechanisch toetsenbord met RGB.
+        - generic [ref=e34]: €59.99
+        - button "Toevoegen" [ref=e35] [cursor=pointer]
+      - generic [ref=e36]:
+        - generic [ref=e37]: 📷
+        - heading "Webcam HD" [level=3] [ref=e38]
+        - paragraph [ref=e39]: 1080p HD webcam voor video calls.
+        - generic [ref=e40]: €44.99
+        - button "Toevoegen" [ref=e41] [cursor=pointer]
+      - generic [ref=e42]:
+        - generic [ref=e43]: 🔋
+        - heading "USB-C Kabel" [level=3] [ref=e44]
+        - paragraph [ref=e45]: 2m USB-C snellaadkabel.
+        - generic [ref=e46]: €12.99
+        - button "Toevoegen" [ref=e47] [cursor=pointer]
+  - generic [ref=e49]:
+    - heading "📬 Contact" [level=2] [ref=e50]
+    - paragraph [ref=e51]: Heb je een vraag of opmerking? Stuur ons een bericht!
+    - generic [ref=e52]:
+      - generic [ref=e53]:
+        - generic [ref=e54]:
+          - generic [ref=e55]: Naam *
+          - textbox "Naam *" [ref=e56]:
+            - /placeholder: Je naam
+        - generic [ref=e57]:
+          - generic [ref=e58]: E-mail *
+          - textbox "E-mail *" [ref=e59]:
+            - /placeholder: je@email.nl
+      - generic [ref=e60]:
+        - generic [ref=e61]: Onderwerp *
+        - textbox "Onderwerp *" [ref=e62]:
+          - /placeholder: Waar gaat het over?
+      - generic [ref=e63]:
+        - generic [ref=e64]: Bericht *
+        - textbox "Bericht *" [ref=e65]:
+          - /placeholder: Schrijf je bericht hier...
+      - button "Verstuur bericht" [ref=e66] [cursor=pointer]
+  - generic [ref=e67]:
+    - generic [ref=e68]:
+      - heading "🛒 Winkelwagen" [level=3] [ref=e69]
+      - button "✕" [ref=e70] [cursor=pointer]
+    - paragraph [ref=e72]: Je winkelwagen is leeg
+    - generic [ref=e73]:
+      - generic [ref=e74]: "Totaal: €0.00"
+      - button "Afrekenen" [ref=e75]
