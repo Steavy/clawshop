@@ -50,7 +50,7 @@
 
     async function loadContacts() {
       try {
-        const res = await fetch('http://localhost:5000/api/contacts/json');
+        const res = await fetch('/api/contacts/json');
         if (!res.ok) throw new Error('HTTP ' + res.status);
         contacts = await res.json();
         renderContacts(contacts);
